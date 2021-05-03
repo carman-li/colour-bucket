@@ -1,0 +1,7 @@
+{
+  "name": "Casserole",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
