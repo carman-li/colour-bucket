@@ -1,22 +1,36 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import './Home.css';
+import Landing from './dashboard/Landing'
+import React from 'react';
 
 const Home: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
+        <IonHeader translucent={true} mode="ios">
+          <IonToolbar className="toolbar ion-padding-horizontal ion-padding-vertical">
+            <IonButtons slot="start">
+              <IonButton class="headerButton" routerLink="/home">
+                <p className="logoText">casserole</p>
+              </IonButton>
+            </IonButtons>
+            <IonButtons slot="end">
+              <IonButton class="headerButton" expand="full">
+                <p className="buttonText">Log In</p>
+              </IonButton>
+              <IonButton class="headerButton" expand="full">
+                <p className="buttonText">Sign Up</p>
+              </IonButton>
+            </IonButtons>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer />
+        <IonGrid className="ion-padding">
+          <IonRow>
+            <IonCol>
+              <Landing />
+            </IonCol>
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

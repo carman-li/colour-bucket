@@ -1,0 +1,30 @@
+/* toolbar styling */
+
+.buttonText {
+    font-size: large;
+    font-weight: 600;
+    letter-spacing: normal;
+    color: var( --ion-color-secondary);
+}
+
+.logoText {
+    font-size: xx-large;
+    font-weight: 600;
+    letter-spacing: normal;
+    color: var( --ion-color-primary);
+}
+
+.headerButton {
+    text-transform: none !important;
+    --background: transparent;
+    --background-activated: transparent;
+    --background-activated-opacity: 0;
+    --background-hover: transparent;
+    --background-hover-opacity: 0;
+    --ripple-color: transparent;
+    --transition: none;
+}
+
+.toolbar {
+    --border-color: transparent !important;
+}
