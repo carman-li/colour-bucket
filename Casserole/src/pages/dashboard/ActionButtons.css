@@ -1,0 +1,13 @@
+.icon {
+    font-size: xx-large;
+    width: 100%
+}
+
+.buttonText {
+    text-align: center;
+    color: var(--ion-color-medium);
+}
+
+.text {
+    text-align: center;
+}

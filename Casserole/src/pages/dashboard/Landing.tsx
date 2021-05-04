@@ -7,9 +7,9 @@ interface ContainerProps { }
 const Landing: React.FC<ContainerProps> = () => {
     return (
         <IonGrid className="body">
-            <IonRow>
-                <IonCol>
-                    <div>Welcome to casserole! Organize, show off, and share your favourite pictures here.</div>
+            <IonRow className="ion-justify-content-center">
+                <IonCol size="7">
+                    <div className="landingText">Welcome to casserole, an online repository of everyone's favourite images!</div>
                 </IonCol>
             </IonRow>
         </IonGrid>
