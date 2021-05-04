@@ -28,3 +28,7 @@
 .toolbar {
     --border-color: transparent !important;
 }
+
+.body {
+    color: var(--ion-color-tertiary);
+}
