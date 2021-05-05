@@ -1,0 +1,15 @@
+.fileName {
+    color: var(--ion-color-medium);
+    font-size: small;
+}
+
+.heading {
+    color: var(--ion-color-primary);
+    font-size: x-large;
+    font-weight: 600;
+    text-align: center;
+}
+
+.bodyText {
+    text-align: center;
+}

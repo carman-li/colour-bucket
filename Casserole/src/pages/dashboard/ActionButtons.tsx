@@ -1,6 +1,7 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonLabel, IonModal, IonPage, IonRow, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
 import { cloudUpload, search, searchOutline, } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
+import { getTags } from '../../common/api';
 import Upload from '../../components/upload/Upload';
 import './ActionButtons.css';
 
@@ -10,7 +11,17 @@ const ActionButtons: React.FC<ContainerProps> = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [showUpload, setShowUpload] = useState(false);
 
-    const [tags, setTags] = useState(["cheese", "cheese2", "cheese3"]);
+    const [tags, setTags] = useState([""]);
+
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const loadData = async () => {
+        var res = await getTags();
+        setTags(res);
+    }
 
     const search = async () => {
 
@@ -37,10 +48,14 @@ const ActionButtons: React.FC<ContainerProps> = () => {
         );
     }
 
+    const dismissModal = () => {
+        setShowUpload(false)
+    }
+
     return (
         <div className="body"><IonGrid className="ion-margin-top ion-no-padding">
-            <IonModal isOpen={showUpload} onDidDismiss={() => setShowUpload(false)}>
-                <Upload />
+            <IonModal cssClass="modal" isOpen={showUpload} onDidDismiss={() => dismissModal()}>
+                <Upload dismissModal={dismissModal} />
             </IonModal>
 
             <IonRow className="ion-justify-content-center ion-margin"> <IonCol size="2">
