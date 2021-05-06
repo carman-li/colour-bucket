@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import './Upload.css';
 import { useHistory } from 'react-router';
 import { uploadImages } from '../../common/api';
-import { usePalette } from 'react-palette'
 import { useGetImageColours } from '../../customHooks';
 
 const Upload: React.FC = () => {
@@ -16,7 +15,7 @@ const Upload: React.FC = () => {
     let history = useHistory();
 
     const onDrop = (picture: any) => {
-        var url = URL.createObjectURL(picture[0]);
+        var url = window.URL.createObjectURL(picture[0]);
 
         setUrl(url);
         setImage(picture[0]);
@@ -57,6 +56,8 @@ const Upload: React.FC = () => {
                     <IonRow className="ion-justify-content-center">
                         <IonCol className="ion-padding" size="4">
                             <ImageUploader
+                                name="uploader"
+                                aria-label="uploader"
                                 className="uploader"
                                 fileContainerStyle={{ border: '3px solid var(--ion-color-medium)', boxShadow: "none" }}
                                 withIcon={true}
@@ -73,7 +74,7 @@ const Upload: React.FC = () => {
                     <IonRow className="ion-justify-content-center">
                         <IonCol className="ion-padding" size="4">
                             <span className="fileName">{fileName ? "File Uploaded: " : ""}</span>
-                            <span className="fileName">{fileName}</span>
+                            <span className="fileName" aria-label="fileName">{fileName}</span>
                         </IonCol>
                     </IonRow>
                     <IonRow className="ion-justify-content-center">
@@ -83,14 +84,14 @@ const Upload: React.FC = () => {
                     </IonRow>
                     <IonRow className="ion-justify-content-center">
                         <IonCol size="2">
-                            {url ? <IonImg src={url} /> : <div></div>}
+                            {url ? <img src={url} aria-label="imagePreview" alt="Image Preview" /> : <div></div>}
 
                         </IonCol>
                     </IonRow>
 
                     <IonRow className="ion-justify-content-center">
                         <IonCol size="4">
-                            <IonButton expand="block" shape="round" type="submit" color="secondary" className="ion-margin button" onClick={() => { sendFiles() }}>
+                            <IonButton disabled={url == ""} aria-label="uploadButton" expand="block" shape="round" type="submit" color="secondary" className="ion-margin button" onClick={() => { sendFiles() }}>
                                 Upload
                     </IonButton>
                         </IonCol>

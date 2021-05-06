@@ -19,11 +19,6 @@ const Home: React.FC = () => {
                 <p className="logoText">Colour Bucket</p>
               </IonButton>
             </IonButtons>
-            {/* <IonButtons slot="end">
-              <IonButton class="headerButton" expand="full" routerLink="/feed">
-                <p className="buttonText">View Feed</p>
-              </IonButton>
-            </IonButtons> */}
           </IonToolbar>
         </IonHeader>
         <IonGrid className="ion-padding">

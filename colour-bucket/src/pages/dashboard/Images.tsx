@@ -45,36 +45,42 @@ const Images: React.FC = () => {
                         </IonCol>
                         <IonCol size="1" className="ion-padding">
                             <IonChip
+                                aria-label="colourChip"
                                 style={{ backgroundColor: pic.colours.darkMuted, width: "100%" }}
                                 className="ion-margin-end"
                                 onClick={() => { navigator.clipboard.writeText(pic.colours.darkMuted); setShowToast(true) }}
                             >
                             </IonChip>
                             <IonChip
+                                aria-label="colourChip"
                                 style={{ backgroundColor: pic.colours.darkVibrant, width: "100%" }}
                                 className="ion-margin-end"
                                 onClick={() => { navigator.clipboard.writeText(pic.colours.darkVibrant); setShowToast(true) }}
                             >
                             </IonChip>
                             <IonChip
+                                aria-label="colourChip"
                                 style={{ backgroundColor: pic.colours.lightMuted, width: "100%" }}
                                 className="ion-margin-end"
                                 onClick={() => { navigator.clipboard.writeText(pic.colours.lightMuted); setShowToast(true) }}
                             >
                             </IonChip>
                             <IonChip
+                                aria-label="colourChip"
                                 style={{ backgroundColor: pic.colours.lightVibrant, width: "100%" }}
                                 className="ion-margin-end"
                                 onClick={() => { navigator.clipboard.writeText(pic.colours.lightVibrant); setShowToast(true) }}
                             >
                             </IonChip>
                             <IonChip
+                                aria-label="colourChip"
                                 style={{ backgroundColor: pic.colours.muted, width: "100%" }}
                                 className="ion-margin-end"
                                 onClick={() => { navigator.clipboard.writeText(pic.colours.muted); setShowToast(true) }}
                             >
                             </IonChip>
                             <IonChip
+                                aria-label="colourChip"
                                 style={{ backgroundColor: pic.colours.vibrant, width: "100%" }}
                                 className="ion-margin-end"
                                 onClick={() => { navigator.clipboard.writeText(pic.colours.vibrant); setShowToast(true) }}
@@ -92,7 +98,7 @@ const Images: React.FC = () => {
         return (
             <>
                 {colours.map((colour) => (
-                    <IonCol size="auto">
+                    <IonCol size="auto" key={colour}>
                         <IonChip
                             color="medium"
                             onClick={() => {
@@ -129,6 +135,7 @@ const Images: React.FC = () => {
             <IonRow className="ion-justify-content-center">
                 <IonCol size="12" size-md="5" className="ion-margin-end">
                     <IonSearchbar
+                        aria-label="searchbar"
                         className="searchBar ion-margin-bottom ion-no-padding"
                         showCancelButton="never"
                         showClearButton="never"
@@ -154,6 +161,7 @@ const Images: React.FC = () => {
                         onClick={() => {
                             search();
                         }}
+                        aria-label="searchButton"
                         disabled={images.length <= 0 || images == null || searchKeyword == ""}
                     >
                         <IonIcon slot="icon-only" icon={searchOutline} />
@@ -171,6 +179,7 @@ const Images: React.FC = () => {
                             loadData();
                         }}
                         disabled={searchKeyword == ""}
+                        aria-label="clearSearch"
                     >
                         Clear Search
                     </IonButton>
