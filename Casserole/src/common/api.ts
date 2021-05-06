@@ -3,7 +3,6 @@ import 'firebase/storage';
 import { Firestore } from './firebase';
 
 const collection = Firestore.collection('instances');
-const imageTagsCollection = Firestore.collection('ref').doc('ImageTags');
 const thisDoc = collection.doc();
 var storageRef = firebase.storage().ref();
 
@@ -12,20 +11,19 @@ var storageRef = firebase.storage().ref();
  * 
  * @returns A list of all image tags
  */
-const getTags = async () => {
-    var results: string[] = [];
+const getColours = async () => {
+    var response: string[] = [];
+    var vals = await thisDoc.get();
 
-    const doc = await imageTagsCollection.get();
+    if (vals.exists) {
+        var arr: [] = vals.data()?.images;
+        arr.forEach(async (image: any) => {
+            response.push(...image.colours.values)
+        });
 
-    if (doc.exists) {
-        results = doc.data()?.imageTags;
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-        results = [""];
+        return response;
     }
-
-    return results;
+    else return [];
 };
 // upload images to cloud storage and store reference in firestore
 
@@ -86,7 +84,7 @@ const getImages = async () => {
 // }
 
 export {
-    getTags,
+    getColours,
     uploadImages,
     getImages
 };

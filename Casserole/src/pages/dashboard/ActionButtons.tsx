@@ -1,8 +1,7 @@
-import { IonCard, IonCardContent, IonChip, IonCol, IonGrid, IonIcon, IonLabel, IonModal, IonRow } from '@ionic/react';
-import { cloudUpload, } from 'ionicons/icons';
+import { IonButton, IonCard, IonCardContent, IonChip, IonCol, IonGrid, IonIcon, IonLabel, IonModal, IonRow, IonSearchbar } from '@ionic/react';
+import { cloudUpload, searchOutline, } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { getTags } from '../../common/api';
 import Upload from '../uploading/Upload';
 import './ActionButtons.css';
 
@@ -10,8 +9,7 @@ import './ActionButtons.css';
 const ActionButtons: React.FC = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [showUpload, setShowUpload] = useState(false);
-
-    const [tags, setTags] = useState([""]);
+    const [colours, setColours] = useState([""]);
 
     let history = useHistory();
 
@@ -20,8 +18,8 @@ const ActionButtons: React.FC = () => {
     // }, []);
 
     // const loadData = async () => {
-    //     var res = await getTags();
-    //     setTags(res);
+    //     var res = await getColours();
+    //     setColours(res.slice(0, 5));
     // }
 
     const search = async () => {
@@ -32,16 +30,16 @@ const ActionButtons: React.FC = () => {
     function RenderChips(): JSX.Element {
         return (
             <>
-                {tags.slice(0, 5).map((tagLabel) => (
+                {colours.map((colour) => (
                     <IonCol size="auto" size-sm="auto">
                         <IonChip
                             color="medium"
                             className="ion-margin-end"
                             onClick={() => {
-                                setSearchKeyword(tagLabel);
+                                setSearchKeyword(colour);
                             }}
                         >
-                            <IonLabel className="chipText">{tagLabel}</IonLabel>
+                            <IonLabel className="chipText">{colour}</IonLabel>
                         </IonChip>
                     </IonCol>
                 ))}
@@ -51,9 +49,9 @@ const ActionButtons: React.FC = () => {
 
     return (
         <IonGrid className="ion-no-padding">
-            {/* 
-            <IonRow className="ion-justify-content-center ion-margin"> <IonCol size="2">
-                <div className="text">Search through our collection of images...</div></IonCol></IonRow>
+
+            {/* <IonRow className="ion-justify-content-center ion-margin"> <IonCol size="2">
+                <div className="text">Search through your uploaded images by hexcode!</div></IonCol></IonRow>
             <IonRow className="ion-justify-content-center">
                 <IonCol size="12" size-md="5" className="ion-margin-end">
                     <IonSearchbar
@@ -61,13 +59,13 @@ const ActionButtons: React.FC = () => {
                         showCancelButton="never"
                         animated
                         value={searchKeyword}
-                        placeholder="Search keyword"
+                        placeholder="Search by hexcode"
                         debounce={1000}
                         onIonChange={(e) => setSearchKeyword(e.detail.value!)}
                     ></IonSearchbar>
                     <IonRow>
                         <IonCol size="auto" size-sm="auto" className="ion-margin-end">
-                            <p className="text">Popular:</p>
+                            <p className="text">Suggestions:</p>
                         </IonCol>
                         <RenderChips />
                     </IonRow>

@@ -71,15 +71,16 @@ const Images: React.FC = () => {
     return (
         <IonGrid className="body">
             <IonToast
+                cssClass="toast"
                 isOpen={showToast}
-                duration={7}
+                duration={500}
                 message="Colour Code Copied :)"
                 position="bottom"
                 onDidDismiss={() => setShowToast(false)}
             />
             <IonRow className="ion-justify-content-center ion-align-items-center">
                 <IonCol>
-                    {images ? <div className="text">Click on a colour chip to copy the hexcode to your clipboard!</div> : <div></div>}
+                    {images.length > 0 && images != null ? <div className="text">Click on a colour chip to copy the hexcode to your clipboard!</div> : <div></div>}
                 </IonCol>
             </IonRow>
             {images.length > 0 && images != null ? <RenderUploads /> : <div></div>}
