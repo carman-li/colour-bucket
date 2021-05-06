@@ -4,6 +4,7 @@ import Landing from './dashboard/Landing'
 import ActionButtons from './dashboard/ActionButtons'
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import Images from './dashboard/Images';
 
 
 const Home: React.FC = () => {
@@ -15,25 +16,28 @@ const Home: React.FC = () => {
           <IonToolbar className="toolbar ion-padding-horizontal ion-padding-top">
             <IonButtons slot="start">
               <IonButton class="headerButton" onClick={() => { history.replace('/home') }}>
-                <p className="logoText">casserole</p>
+                <p className="logoText">Colour Bucket</p>
               </IonButton>
             </IonButtons>
-            <IonButtons slot="end">
+            {/* <IonButtons slot="end">
               <IonButton class="headerButton" expand="full" routerLink="/feed">
                 <p className="buttonText">View Feed</p>
               </IonButton>
-            </IonButtons>
+            </IonButtons> */}
           </IonToolbar>
         </IonHeader>
         <IonGrid className="ion-padding">
-          <IonRow className="ion-justify-content-center ion-margin">
+          <IonRow className="ion-justify-content-center">
             <IonCol size="6">
               <Landing />
             </IonCol>
           </IonRow>
           <IonRow className="ion-justify-content-center">
+            <IonCol><ActionButtons /></IonCol>
+          </IonRow>
+          <IonRow className="ion-justify-content-center">
             <IonCol>
-              <IonCol size="2"><ActionButtons /></IonCol>
+              <Images />
             </IonCol>
           </IonRow>
         </IonGrid>

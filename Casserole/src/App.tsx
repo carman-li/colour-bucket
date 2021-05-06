@@ -23,7 +23,6 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import React from 'react';
 import Upload from './pages/uploading/Upload';
-import Feed from './pages/dashboard/feed/Feed';
 
 const App: React.FC = () => (
   <IonApp>
@@ -33,7 +32,6 @@ const App: React.FC = () => (
           <Home />
         </Route>
         <Route exact path="/upload" component={Upload} />
-        <Route exact path="/feed" component={Feed} />
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>

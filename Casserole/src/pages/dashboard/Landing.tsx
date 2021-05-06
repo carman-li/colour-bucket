@@ -9,7 +9,7 @@ const Landing: React.FC<ContainerProps> = () => {
         <IonGrid className="body">
             <IonRow className="ion-justify-content-center ion-margin">
                 <IonCol>
-                    <div className="landingText">Welcome to casserole, an online repository of everyone's favourite images! To get started, click the button to upload your own.</div>
+                    <div className="landingText">Welcome to Colour Bucket! Upload images and see their colour palettes. To get started, click the button to upload an image.</div>
                 </IonCol>
             </IonRow>
         </IonGrid>

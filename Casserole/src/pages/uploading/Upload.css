@@ -1,6 +1,7 @@
 .fileName {
     color: var(--ion-color-medium);
     font-size: small;
+    text-align: center;
 }
 
 .heading {
@@ -12,4 +13,9 @@
 
 .bodyText {
     text-align: center;
+}
+
+.palette {
+    width: 500px;
+    height: 500px;
 }

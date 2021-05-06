@@ -50,7 +50,7 @@ const ActionButtons: React.FC = () => {
     }
 
     return (
-        <div className="body"><IonGrid className="ion-no-padding">
+        <IonGrid className="ion-no-padding">
             {/* 
             <IonRow className="ion-justify-content-center ion-margin"> <IonCol size="2">
                 <div className="text">Search through our collection of images...</div></IonCol></IonRow>
@@ -90,17 +90,19 @@ const ActionButtons: React.FC = () => {
             {/* <IonRow className="ion-margin"> <IonCol size="2">
                 <div className="text">Upload some images of your own...</div></IonCol></IonRow> */}
             <IonRow className="ion-justify-content-center">
-                <IonCard className="card ion-padding" color="secondary" onClick={() => { history.replace('/upload') }}>
-                    <IonCardContent>
-                        <IonIcon className="icon" icon={cloudUpload} />
-                        <div className="cardTitle">Upload Image(s)</div>
-                    </IonCardContent>
+                <IonCol size="2">
+                    <IonCard className="card ion-padding" color="secondary" onClick={() => { history.replace('/upload') }}>
+                        <IonCardContent>
+                            <IonIcon className="icon" icon={cloudUpload} />
+                            <div className="cardTitle">Upload Image</div>
+                        </IonCardContent>
 
-                </IonCard>
+                    </IonCard>
+                </IonCol>
             </IonRow>
             {/* <IonRow className="ion-margin"> <IonCol size="2">
                 <div className="text">or keep scrolling to see all our images!</div></IonCol></IonRow> */}
-        </IonGrid></div>
+        </IonGrid>
     );
 };
 

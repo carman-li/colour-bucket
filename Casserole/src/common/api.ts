@@ -32,35 +32,35 @@ const getTags = async () => {
 
 // upload images to cloud storage and store reference in firestore
 
-const uploadImages = async (files: File[]) => {
-    files.forEach(async (file) => {
-        var imagesRef = storageRef.child(file.name);
-        await imagesRef.put(file).then(async (snapshot) => {
-            var url = await snapshot.ref.getDownloadURL();
+const uploadImages = async (file: any) => {
+    var imagesRef = storageRef.child(file.file.name);
+    await imagesRef.put(file.file).then(async (snapshot) => {
+        var url = await snapshot.ref.getDownloadURL();
 
-            await imagesCollection.doc().set({
-                fileName: file.name,
-                storageUrl: url.toString()
-            })
-        });
+        await imagesCollection.doc().set({
+            fileName: file.file.name,
+            storageUrl: url.toString(),
+            colours: file.colours
+        })
+        return true;
     });
-    return true;
-};
+}
 
-// get all images from cloud storage by returning all image urls in an array
+// get all images from cloud storage
 
-const getImageUrls = async () => {
-    var urlArray: string[] = [];
+const getImages = async () => {
+    var response = <any[]>([]);
 
     await imagesCollection.get().then((querySnapshot) => {
         querySnapshot.forEach(async (doc) => {
             // doc.data() is never undefined for query doc snapshots
             var url: string = await doc.data().storageUrl;
-            urlArray.push(url);
+            var colours: any = await doc.data().colours;
+            response.push({ url: url, colours: colours })
         });
     });
 
-    return urlArray;
+    return response;
 }
 
 // const getImageUrls = () => {
@@ -81,5 +81,5 @@ const getImageUrls = async () => {
 export {
     getTags,
     uploadImages,
-    getImageUrls
+    getImages
 };

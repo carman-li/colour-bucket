@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { PaletteColors, usePalette } from "react-palette";
 import { Api } from "./common";
 
 enum FetchStatus {
@@ -9,7 +10,7 @@ enum FetchStatus {
 
 const functions = new Map<string, any>([
     ["getTags", Api.getTags],
-    ["getImageUrls", Api.getImageUrls]
+    ["getImages", Api.getImages]
 ]);
 
 const getFunction = (functionName: string) => {
@@ -49,4 +50,15 @@ const useFetch = (functionName: any) => {
     return { status, data };
 };
 
-export { FetchStatus, useFetch };
+
+const useGetImageColours = (url: string) => {
+    const { data, loading, error } = usePalette(url)
+
+    useEffect(() => {
+        if (!url || url == "") return;
+    }, [url]);
+
+    return data;
+};
+
+export { FetchStatus, useFetch, useGetImageColours };

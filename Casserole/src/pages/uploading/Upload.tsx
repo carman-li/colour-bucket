@@ -1,40 +1,32 @@
-import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonLabel, IonPage, IonRow, IonToolbar } from '@ionic/react';
 import ImageUploader from 'react-images-upload';
 import React, { useState } from 'react';
 import './Upload.css';
 import { useHistory } from 'react-router';
 import { uploadImages } from '../../common/api';
-
+import { usePalette } from 'react-palette'
+import { useGetImageColours } from '../../customHooks';
 
 const Upload: React.FC = () => {
-    const [pictures, setPictures] = useState<any[]>([]);
-    const [fileNames, setFileNames] = useState([]);
+    const [image, setImage] = useState({});
+    const [fileName, setFileName] = useState([]);
+    const [url, setUrl] = useState("");
+    const colours = useGetImageColours(url)
+
     let history = useHistory();
 
     const onDrop = (picture: any) => {
-        picture.forEach((pic: { url: string; }) => {
-            pic.url = URL.createObjectURL(pic);
-        });
-        setPictures(pictures.concat(picture));
+        var url = URL.createObjectURL(picture[0]);
 
-        var newNames = picture.map((pic: { name: any; }) =>
-            pic.name
-        );
-        setFileNames(fileNames.concat(newNames));
-    }
+        setUrl(url);
+        setImage(picture[0]);
+        setFileName(picture[0].name)
 
-    function RenderFileNames(): JSX.Element {
-        return (
-            <>
-                {fileNames.map((name) => (
-                    <span key={name} className="fileName">{name},</span>
-                ))}
-            </>
-        );
     }
 
     const sendFiles = async () => {
-        await uploadImages(pictures).then((val) => console.log(val));
+        var picObj = { file: image, colours: colours };
+        await uploadImages(picObj);
         history.replace('/home');
     };
 
@@ -45,7 +37,7 @@ const Upload: React.FC = () => {
                     <IonToolbar className="toolbar ion-padding-horizontal ion-padding-top">
                         <IonButtons slot="start">
                             <IonButton class="headerButton" onClick={() => { history.replace('/home') }}>
-                                <p className="logoText">casserole</p>
+                                <p className="logoText">Colour Bucket</p>
                             </IonButton>
                         </IonButtons>
 
@@ -54,12 +46,12 @@ const Upload: React.FC = () => {
                 <IonGrid className="ion-padding ion-margin">
                     <IonRow>
                         <IonCol className="ion-padding">
-                            <div className="heading">Upload Your Images</div>
+                            <div className="heading">Upload Your Image</div>
                         </IonCol>
                     </IonRow>
                     <IonRow>
                         <IonCol className="ion-padding">
-                            <div className="bodyText">Click the button below to choose the images you want to upload!</div>
+                            <div className="bodyText">Click the button below to choose the image you want to upload!</div>
                         </IonCol>
                     </IonRow>
                     <IonRow className="ion-justify-content-center">
@@ -73,15 +65,29 @@ const Upload: React.FC = () => {
                                 imgExtension={['.jpg', '.gif', '.png']}
                                 maxFileSize={5242880}
                                 label={"Max file size: 5mb, Accepted file types: jpg, gif, png"}
+                                singleImage={true}
                             />
 
                         </IonCol>
                     </IonRow>
                     <IonRow className="ion-justify-content-center">
                         <IonCol className="ion-padding" size="4">
-                            {fileNames.length > 0 ? <div className="fileName">File(s) uploaded: <RenderFileNames /></div> : <div></div>}
+                            <span className="fileName">{fileName ? "File Uploaded: " : ""}</span>
+                            <span className="fileName">{fileName}</span>
                         </IonCol>
                     </IonRow>
+                    <IonRow className="ion-justify-content-center">
+                        <IonCol className="ion-padding" size="4">
+                            <span className="fileName">Image Preview</span>
+                        </IonCol>
+                    </IonRow>
+                    <IonRow className="ion-justify-content-center">
+                        <IonCol size="2">
+                            {url ? <IonImg src={url} /> : <div></div>}
+
+                        </IonCol>
+                    </IonRow>
+
                     <IonRow className="ion-justify-content-center">
                         <IonCol size="4">
                             <IonButton expand="block" shape="round" type="submit" color="secondary" className="ion-margin button" onClick={() => { sendFiles() }}>
