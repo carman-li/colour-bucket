@@ -13,7 +13,6 @@ const Images: React.FC = () => {
 
     const loadData = async () => {
         var res = await getImages();
-        console.log(res)
         setImages(res);
     }
 
@@ -21,7 +20,7 @@ const Images: React.FC = () => {
         return (
             <>
                 {images.map((pic: any) => (
-                    <IonRow className="ion-justify-content-center ion-align-items-center ion-margin" >
+                    pic != null ? <IonRow className="ion-justify-content-center ion-align-items-center ion-margin" >
                         <IonCol size="3" key={pic.url} className="ion-padding">
                             <IonImg src={pic.url} />
                         </IonCol>
@@ -63,8 +62,7 @@ const Images: React.FC = () => {
                             >
                             </IonChip>
                         </IonCol>
-
-                    </IonRow>
+                    </IonRow> : <div></div>
                 ))}
             </>
         );
@@ -81,10 +79,11 @@ const Images: React.FC = () => {
             />
             <IonRow className="ion-justify-content-center ion-align-items-center">
                 <IonCol>
-                    <div className="text">Click on a colour chip to copy the hexcode to your clipboard!</div>
+                    {images ? <div className="text">Click on a colour chip to copy the hexcode to your clipboard!</div> : <div></div>}
                 </IonCol>
             </IonRow>
-            <RenderUploads />
+            {images.length > 0 && images != null ? <RenderUploads /> : <div></div>}
+
         </IonGrid >
     );
 };

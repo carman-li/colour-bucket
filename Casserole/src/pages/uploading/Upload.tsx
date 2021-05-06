@@ -78,7 +78,7 @@ const Upload: React.FC = () => {
                     </IonRow>
                     <IonRow className="ion-justify-content-center">
                         <IonCol className="ion-padding" size="4">
-                            <span className="fileName">Image Preview</span>
+                            <span className="fileName">Image Preview:</span>
                         </IonCol>
                     </IonRow>
                     <IonRow className="ion-justify-content-center">

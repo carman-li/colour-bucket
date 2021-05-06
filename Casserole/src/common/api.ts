@@ -1,12 +1,10 @@
 import firebase from "firebase/app";
 import 'firebase/storage';
-import { documentText } from "ionicons/icons";
-import { url } from "node:inspector";
 import { Firestore } from './firebase';
 
-const imagesCollection = Firestore.collection('images');
+const collection = Firestore.collection('instances');
 const imageTagsCollection = Firestore.collection('ref').doc('ImageTags');
-// Create a root reference
+const thisDoc = collection.doc();
 var storageRef = firebase.storage().ref();
 
 /**
@@ -29,19 +27,27 @@ const getTags = async () => {
 
     return results;
 };
-
 // upload images to cloud storage and store reference in firestore
 
 const uploadImages = async (file: any) => {
-    var imagesRef = storageRef.child(file.file.name);
-    await imagesRef.put(file.file).then(async (snapshot) => {
-        var url = await snapshot.ref.getDownloadURL();
+    var ref = storageRef.child(file.file.name);
+    var vals = await thisDoc.get();
+    var arr: [] = vals.data()?.images;
 
-        await imagesCollection.doc().set({
+    await ref.put(file.file).then(async (snapshot) => {
+        var url = await snapshot.ref.getDownloadURL();
+        var thisArr = [arr, {
             fileName: file.file.name,
             storageUrl: url.toString(),
             colours: file.colours
-        })
+        }].filter((array) => array != null).flat();
+        thisDoc.set({
+            images: thisArr
+        }).then(() => {
+            console.log("Document successfully updated!");
+        });
+
+        getImages();
         return true;
     });
 }
@@ -51,16 +57,17 @@ const uploadImages = async (file: any) => {
 const getImages = async () => {
     var response = <any[]>([]);
 
-    await imagesCollection.get().then((querySnapshot) => {
-        querySnapshot.forEach(async (doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            var url: string = await doc.data().storageUrl;
-            var colours: any = await doc.data().colours;
-            response.push({ url: url, colours: colours })
-        });
-    });
+    var vals = await thisDoc.get();
 
-    return response;
+    if (vals.exists) {
+        var arr: [] = vals.data()?.images;
+        arr.forEach(async (image: { storageUrl: string | PromiseLike<string>; colours: any; }) => {
+            response.push({ url: image.storageUrl, colours: image.colours })
+        });
+
+        return response;
+    }
+    else return [];
 }
 
 // const getImageUrls = () => {
