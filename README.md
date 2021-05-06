@@ -1,1 +1,1 @@
-# shopify-image-repository
+# colour-bucket
