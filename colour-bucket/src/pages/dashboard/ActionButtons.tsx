@@ -49,42 +49,6 @@ const ActionButtons: React.FC = () => {
 
     return (
         <IonGrid className="ion-no-padding">
-
-            {/* <IonRow className="ion-justify-content-center ion-margin"> <IonCol size="2">
-                <div className="text">Search through your uploaded images by hexcode!</div></IonCol></IonRow>
-            <IonRow className="ion-justify-content-center">
-                <IonCol size="12" size-md="5" className="ion-margin-end">
-                    <IonSearchbar
-                        className="searchBar ion-margin-bottom ion-no-padding"
-                        showCancelButton="never"
-                        animated
-                        value={searchKeyword}
-                        placeholder="Search by hexcode"
-                        debounce={1000}
-                        onIonChange={(e) => setSearchKeyword(e.detail.value!)}
-                    ></IonSearchbar>
-                    <IonRow>
-                        <IonCol size="auto" size-sm="auto" className="ion-margin-end">
-                            <p className="text">Suggestions:</p>
-                        </IonCol>
-                        <RenderChips />
-                    </IonRow>
-                </IonCol>
-
-                <IonCol size="12" size-md="1">
-                    <IonButton
-                        fill="solid"
-                        color="secondary"
-                        expand="full"
-                        shape="round"
-                        onClick={() => {
-                            search();
-                        }}
-                    >
-                        <IonIcon slot="icon-only" icon={searchOutline} />
-                    </IonButton>
-                </IonCol>
-            </IonRow> */}
             {/* <IonRow className="ion-margin"> <IonCol size="2">
                 <div className="text">Upload some images of your own...</div></IonCol></IonRow> */}
             <IonRow className="ion-justify-content-center">

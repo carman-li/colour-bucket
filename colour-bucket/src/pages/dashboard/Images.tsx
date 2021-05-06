@@ -1,4 +1,4 @@
-import { IonButton, IonChip, IonCol, IonGrid, IonIcon, IonImg, IonLabel, IonRow, IonSearchbar, IonToast } from '@ionic/react';
+import { IonButton, IonChip, IonCol, IonGrid, IonIcon, IonImg, IonLabel, IonLoading, IonRow, IonSearchbar, IonToast } from '@ionic/react';
 import { searchOutline } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 import { getColours, getImages, searchColours } from '../../common/api';
@@ -10,24 +10,29 @@ const Images: React.FC = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [colours, setColours] = useState([""]);
     const [searched, setSearched] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const search = async () => {
+        setLoading(true);
         setSearched(true);
         var res = await searchColours(searchKeyword);
         setImages(res);
+        setLoading(false);
     }
 
     useEffect(() => {
         if (searched == false) {
             loadData();
         }
-    }, [setImages, setSearched])
+    }, [setImages])
 
     const loadData = async () => {
+        setLoading(true);
         var res = await getImages();
         setImages(res);
         var coloursRes = await getColours();
         setColours(coloursRes.slice(0, 5));
+        setLoading(false);
     }
 
     function RenderUploads(): JSX.Element {
@@ -35,7 +40,7 @@ const Images: React.FC = () => {
             <>
                 {images.map((pic: any) => (
                     pic != null ? <IonRow className="ion-justify-content-center ion-align-items-center ion-margin" >
-                        <IonCol size="3" key={pic.url} className="ion-padding">
+                        <IonCol size="3" className="ion-padding">
                             <IonImg src={pic.url} />
                         </IonCol>
                         <IonCol size="1" className="ion-padding">
@@ -104,6 +109,13 @@ const Images: React.FC = () => {
 
     return (
         <IonGrid className="body">
+            <IonLoading
+                cssClass="loading"
+                isOpen={loading}
+                onDidDismiss={() => setLoading(false)}
+                message={'Please wait...'}
+                spinner="crescent"
+            />
             <IonToast
                 cssClass="toast"
                 isOpen={showToast}
@@ -113,16 +125,16 @@ const Images: React.FC = () => {
                 onDidDismiss={() => setShowToast(false)}
             />
             <IonRow className="ion-justify-content-center ion-margin"> <IonCol>
-                <div className="text">Search through your uploaded images by hexcode.</div></IonCol></IonRow>
+                <div className="text">Search through your uploaded images by hexcode. Scroll to see all your images.</div></IonCol></IonRow>
             <IonRow className="ion-justify-content-center">
                 <IonCol size="12" size-md="5" className="ion-margin-end">
                     <IonSearchbar
                         className="searchBar ion-margin-bottom ion-no-padding"
                         showCancelButton="never"
+                        showClearButton="never"
                         animated
                         value={searchKeyword}
                         placeholder="Search by hexcode"
-                        debounce={1000}
                         onIonChange={(e) => setSearchKeyword(e.detail.value!)}
                     ></IonSearchbar>
                     {colours.length > 0 ? <IonRow>
@@ -140,10 +152,9 @@ const Images: React.FC = () => {
                         expand="full"
                         shape="round"
                         onClick={() => {
-                            setSearched(true);
                             search();
                         }}
-                        disabled={images.length <= 0 || images == null}
+                        disabled={images.length <= 0 || images == null || searchKeyword == ""}
                     >
                         <IonIcon slot="icon-only" icon={searchOutline} />
                     </IonButton>
