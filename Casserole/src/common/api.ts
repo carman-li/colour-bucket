@@ -20,7 +20,6 @@ const getTags = async () => {
     const doc = await imageTagsCollection.get();
 
     if (doc.exists) {
-        console.log("Document data:", doc.data()?.imageTags);
         results = doc.data()?.imageTags;
     } else {
         // doc.data() will be undefined in this case
@@ -39,13 +38,13 @@ const uploadImages = async (files: File[]) => {
         await imagesRef.put(file).then(async (snapshot) => {
             var url = await snapshot.ref.getDownloadURL();
 
-            imagesCollection.doc().set({
+            await imagesCollection.doc().set({
                 fileName: file.name,
                 storageUrl: url.toString()
             })
         });
     });
-
+    return true;
 };
 
 // get all images from cloud storage by returning all image urls in an array
@@ -54,44 +53,33 @@ const getImageUrls = async () => {
     var urlArray: string[] = [];
 
     await imagesCollection.get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(async (doc) => {
             // doc.data() is never undefined for query doc snapshots
-            var url: string = doc.data().storageUrl;
-            urlArray.push(url);
-        });
-    });
-
-    // var imagesArray = urlArray.forEach(async (url: string) => {
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.responseType = 'blob';
-    //     xhr.onload = (event) => {
-    //         var blob = xhr.response;
-    //     };
-    //     xhr.open('GET', url);
-    //     xhr.send();
-    // })
-
-    return urlArray;
-}
-
-const imageListener = async () => {
-    var urlArray: string[] = [];
-
-
-    await imagesCollection.onSnapshot((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            var url: string = doc.data().storageUrl;
+            var url: string = await doc.data().storageUrl;
             urlArray.push(url);
         });
     });
 
     return urlArray;
 }
+
+// const getImageUrls = () => {
+//     var urlArray: string[] = [];
+
+
+//     imagesCollection.onSnapshot((querySnapshot) => {
+//         querySnapshot.forEach((doc) => {
+//             // doc.data() is never undefined for query doc snapshots
+//             var url: string = doc.data().storageUrl;
+//             urlArray.push(url);
+//         });
+//     });
+
+//     return urlArray;
+// }
 
 export {
     getTags,
     uploadImages,
-    imageListener,
     getImageUrls
 };

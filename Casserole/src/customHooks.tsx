@@ -9,6 +9,7 @@ enum FetchStatus {
 
 const functions = new Map<string, any>([
     ["getTags", Api.getTags],
+    ["getImageUrls", Api.getImageUrls]
 ]);
 
 const getFunction = (functionName: string) => {

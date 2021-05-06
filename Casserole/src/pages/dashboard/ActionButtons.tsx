@@ -1,27 +1,28 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonLabel, IonModal, IonPage, IonRow, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
-import { cloudUpload, search, searchOutline, } from 'ionicons/icons';
+import { IonCard, IonCardContent, IonChip, IonCol, IonGrid, IonIcon, IonLabel, IonModal, IonRow } from '@ionic/react';
+import { cloudUpload, } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router';
 import { getTags } from '../../common/api';
-import Upload from '../../components/upload/Upload';
+import Upload from '../uploading/Upload';
 import './ActionButtons.css';
 
-interface ContainerProps { }
 
-const ActionButtons: React.FC<ContainerProps> = () => {
+const ActionButtons: React.FC = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [showUpload, setShowUpload] = useState(false);
 
     const [tags, setTags] = useState([""]);
 
+    let history = useHistory();
 
-    useEffect(() => {
-        loadData();
-    }, []);
+    // useEffect(() => {
+    //     loadData();
+    // }, []);
 
-    const loadData = async () => {
-        var res = await getTags();
-        setTags(res);
-    }
+    // const loadData = async () => {
+    //     var res = await getTags();
+    //     setTags(res);
+    // }
 
     const search = async () => {
 
@@ -48,15 +49,8 @@ const ActionButtons: React.FC<ContainerProps> = () => {
         );
     }
 
-    const dismissModal = () => {
-        setShowUpload(false)
-    }
-
     return (
-        <div className="body"><IonGrid className="ion-margin-top ion-no-padding">
-            <IonModal cssClass="modal" isOpen={showUpload} onDidDismiss={() => dismissModal()}>
-                <Upload dismissModal={dismissModal} />
-            </IonModal>
+        <div className="body"><IonGrid className="ion-no-padding">
             {/* 
             <IonRow className="ion-justify-content-center ion-margin"> <IonCol size="2">
                 <div className="text">Search through our collection of images...</div></IonCol></IonRow>
@@ -95,10 +89,8 @@ const ActionButtons: React.FC<ContainerProps> = () => {
             </IonRow> */}
             {/* <IonRow className="ion-margin"> <IonCol size="2">
                 <div className="text">Upload some images of your own...</div></IonCol></IonRow> */}
-            <IonRow className="ion-justify-content-center ion-margin">
-                <IonCard className="card ion-padding" color="secondary" button onClick={() => {
-                    setShowUpload(true);
-                }}>
+            <IonRow className="ion-justify-content-center">
+                <IonCard className="card ion-padding" color="secondary" onClick={() => { history.replace('/upload') }}>
                     <IonCardContent>
                         <IonIcon className="icon" icon={cloudUpload} />
                         <div className="cardTitle">Upload Image(s)</div>
