@@ -6,11 +6,6 @@ const collection = Firestore.collection('instances');
 const thisDoc = collection.doc();
 var storageRef = firebase.storage().ref();
 
-/**
- * Retrieves a list of all image tags in our database
- * 
- * @returns A list of all image tags
- */
 const getColours = async () => {
     var response: string[] = [];
     var vals = await thisDoc.get();
@@ -18,14 +13,34 @@ const getColours = async () => {
     if (vals.exists) {
         var arr: [] = vals.data()?.images;
         arr.forEach(async (image: any) => {
-            response.push(...image.colours.values)
+            var temp: Object = image.colours;
+            response.push(...Object.values(temp))
         });
 
         return response;
     }
     else return [];
 };
-// upload images to cloud storage and store reference in firestore
+
+const searchColours = async (query: string) => {
+    var response = <any[]>([]);
+    var results: ({ url: any; colours: any; } | null)[] = [];
+
+    var vals = await thisDoc.get();
+
+    if (vals.exists) {
+        var arr: [] = vals.data()?.images;
+        response = arr.filter(async (image: any) => {
+            var temp: Object = image.colours;
+            if (Object.values(temp).includes(query)) {
+                results.push({ url: image.storageUrl, colours: image.colours });
+            }
+        });
+
+        return results;
+    }
+    else return [];
+}
 
 const uploadImages = async (file: any) => {
     var ref = storageRef.child(file.file.name);
@@ -50,7 +65,6 @@ const uploadImages = async (file: any) => {
     });
 }
 
-// get all images from cloud storage
 
 const getImages = async () => {
     var response = <any[]>([]);
@@ -68,23 +82,9 @@ const getImages = async () => {
     else return [];
 }
 
-// const getImageUrls = () => {
-//     var urlArray: string[] = [];
-
-
-//     imagesCollection.onSnapshot((querySnapshot) => {
-//         querySnapshot.forEach((doc) => {
-//             // doc.data() is never undefined for query doc snapshots
-//             var url: string = doc.data().storageUrl;
-//             urlArray.push(url);
-//         });
-//     });
-
-//     return urlArray;
-// }
-
 export {
     getColours,
     uploadImages,
-    getImages
+    getImages,
+    searchColours
 };
