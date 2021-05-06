@@ -1,5 +1,6 @@
 .landingText {
     font-size: xx-large;
-    text-align: center;
     color: var(--ion-color-secondary);
+    line-height: 1.3em;
+    text-align: center;
 }

@@ -57,7 +57,7 @@ const ActionButtons: React.FC<ContainerProps> = () => {
             <IonModal cssClass="modal" isOpen={showUpload} onDidDismiss={() => dismissModal()}>
                 <Upload dismissModal={dismissModal} />
             </IonModal>
-
+            {/* 
             <IonRow className="ion-justify-content-center ion-margin"> <IonCol size="2">
                 <div className="text">Search through our collection of images...</div></IonCol></IonRow>
             <IonRow className="ion-justify-content-center">
@@ -92,23 +92,22 @@ const ActionButtons: React.FC<ContainerProps> = () => {
                         <IonIcon slot="icon-only" icon={searchOutline} />
                     </IonButton>
                 </IonCol>
-            </IonRow>
-            <IonRow className="ion-justify-content-center ion-margin"> <IonCol size="2">
-                <div className="text">or upload some images of your own!</div></IonCol></IonRow>
-            <IonRow className="ion-justify-content-center"></IonRow>
-            <IonRow className="ion-justify-content-center">
+            </IonRow> */}
+            {/* <IonRow className="ion-margin"> <IonCol size="2">
+                <div className="text">Upload some images of your own...</div></IonCol></IonRow> */}
+            <IonRow className="ion-justify-content-center ion-margin">
                 <IonCard className="card ion-padding" color="secondary" button onClick={() => {
                     setShowUpload(true);
                 }}>
                     <IonCardContent>
                         <IonIcon className="icon" icon={cloudUpload} />
-                        <div className="cardTitle">Upload an Image</div>
+                        <div className="cardTitle">Upload Image(s)</div>
                     </IonCardContent>
 
                 </IonCard>
             </IonRow>
-
-
+            {/* <IonRow className="ion-margin"> <IonCol size="2">
+                <div className="text">or keep scrolling to see all our images!</div></IonCol></IonRow> */}
         </IonGrid></div>
     );
 };

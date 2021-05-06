@@ -3,6 +3,7 @@ import ImageUploader from 'react-images-upload';
 import React, { useState } from 'react';
 import './Upload.css';
 import { useHistory } from 'react-router';
+import { uploadImages } from '../../common/api';
 
 interface Props {
     dismissModal: any
@@ -38,11 +39,12 @@ const Upload: React.FC<Props> = (props) => {
         );
     }
 
-    const sendFiles = () => {
+    const sendFiles = async () => {
+        await uploadImages(pictures);
         dismissModal();
-        history.push("/postUpload", {
-            files: pictures,
-        });
+        // history.push("/postUpload", {
+        //     files: pictures,
+        // });
     };
 
     return (

@@ -1,8 +1,9 @@
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCheckbox, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonRadio, IonRadioGroup, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react';
 import ImageUploader from 'react-images-upload';
 import React, { useEffect, useState } from 'react';
 import './PostUpload.css';
 import { getTags } from '../../common/api';
+import { setConstantValue } from 'typescript';
 
 interface Props {
     history: {
@@ -14,50 +15,71 @@ interface Props {
     };
 }
 
+class Tag {
+    tag: string;
+    selected: boolean;
+
+    constructor(tag: string, selected: boolean) {
+        this.tag = tag;
+        this.selected = selected;
+    }
+
+}
+
+class Picture {
+    picture: File;
+    tags: string[];
+
+    constructor(picture: File, tags: string[]) {
+        this.picture = picture;
+        this.tags = tags;
+    }
+}
+
 const PostUpload: React.FC<Props> = (props) => {
     const data = props.history.location.state;
     const [pictures, setPictures] = useState<any[]>([]);
     const [tags, setTags] = useState([""]);
+    const [checkboxList, setCheckBoxList] = useState<any[]>([]);
 
 
     useEffect(() => {
         loadData();
-    }, []);
+    }, [data]);
 
     const loadData = async () => {
         var res = await getTags();
         setTags(res);
         setPictures(data.files);
-        console.log(pictures);
+        var list = res.map((tag) => new Tag(tag, false));
+        setCheckBoxList(list);
     }
 
     function RenderUploads(): JSX.Element {
         return (
             <>
                 {pictures.map((picture) => (
-                    <IonRow>
-                        <IonCol size="2" key={picture.name} className="ion-padding">
+                    <IonRow className="ion-justify-content-center ion-align-items-center ion-margin" key={picture.name}>
+                        <IonCol size="4" key={picture.name} className="ion-padding">
                             <img src={picture.url} />
                         </IonCol>
-                        <IonCol size="2">
-                            {tags.map((tagLabel) => (
-                                <IonCol size="auto" size-sm="auto">
-                                    <IonChip
-                                        color="medium"
-                                        className="ion-margin-end"
-                                        onClick={() => {
-
-                                        }}
-                                    >
-                                        <IonLabel className="chipText">{tagLabel}</IonLabel>
-                                    </IonChip>
-                                </IonCol>
+                        <IonCol size="2" className="ion-padding">
+                            {checkboxList.map((tag, i) => (
+                                <IonItem key={i} lines="none">
+                                    <IonLabel color="tertiary" className="tagText">{tag.tag}</IonLabel>
+                                    <IonCheckbox slot="end" value={tag.tag} checked={tag.selected} color="medium" />
+                                </IonItem>
                             ))}
                         </IonCol>
                     </IonRow>
+
                 ))}
             </>
         );
+    }
+
+    const upload = async () => {
+
     }
 
     return (
@@ -80,7 +102,7 @@ const PostUpload: React.FC<Props> = (props) => {
                     </IonRow>
                     <IonRow>
                         <IonCol className="ion-padding">
-                            <div className="bodyText">Click as many chips as you want to tag your images!</div>
+                            <div className="bodyText">Select as many tags as you want for your images!</div>
                         </IonCol>
                     </IonRow>
                     <RenderUploads />

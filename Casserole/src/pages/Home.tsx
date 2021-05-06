@@ -3,6 +3,7 @@ import './Home.css';
 import Landing from './dashboard/Landing'
 import ActionButtons from './dashboard/ActionButtons'
 import React from 'react';
+import Images from './dashboard/Images';
 
 const Home: React.FC = () => {
   return (
@@ -26,14 +27,15 @@ const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonGrid className="ion-padding">
-          <IonRow>
+          <IonRow className="ion-justify-content-center ion-margin">
             <IonCol>
               <Landing />
             </IonCol>
+            <IonCol size="2"><ActionButtons /></IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <ActionButtons />
+              <Images />
             </IonCol>
           </IonRow>
         </IonGrid>
