@@ -65,7 +65,6 @@ const uploadImages = async (file: any) => {
     });
 }
 
-
 const getImages = async () => {
     var response = <any[]>([]);
 
