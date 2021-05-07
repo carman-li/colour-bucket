@@ -15,7 +15,7 @@ const Home: React.FC = () => {
         <IonHeader translucent={true} mode="ios">
           <IonToolbar className="toolbar ion-padding-horizontal ion-padding-top">
             <IonButtons slot="start">
-              <IonButton class="headerButton" onClick={() => { history.replace('/home') }}>
+              <IonButton class="headerButton" aria-label="homeButton" onClick={() => { history.replace('/home') }}>
                 <p className="logoText">Colour Bucket</p>
               </IonButton>
             </IonButtons>

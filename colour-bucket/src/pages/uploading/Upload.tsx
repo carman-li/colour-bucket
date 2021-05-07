@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonLabel, IonPage, IonRow, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonLabel, IonPage, IonRow, IonToolbar } from '@ionic/react';
 import ImageUploader from 'react-images-upload';
 import React, { useState } from 'react';
 import './Upload.css';
@@ -8,7 +8,7 @@ import { useGetImageColours } from '../../customHooks';
 
 const Upload: React.FC = () => {
     const [image, setImage] = useState({});
-    const [fileName, setFileName] = useState([]);
+    const [fileName, setFileName] = useState("");
     const [url, setUrl] = useState("");
     const colours = useGetImageColours(url)
 
@@ -35,7 +35,7 @@ const Upload: React.FC = () => {
                 <IonHeader translucent={true} mode="ios">
                     <IonToolbar className="toolbar ion-padding-horizontal ion-padding-top">
                         <IonButtons slot="start">
-                            <IonButton class="headerButton" onClick={() => { history.replace('/home') }}>
+                            <IonButton class="headerButton" aria-label="homeButton" onClick={() => { history.replace('/home') }}>
                                 <p className="logoText">Colour Bucket</p>
                             </IonButton>
                         </IonButtons>
@@ -73,19 +73,18 @@ const Upload: React.FC = () => {
                     </IonRow>
                     <IonRow className="ion-justify-content-center">
                         <IonCol className="ion-padding" size="4">
-                            <span className="fileName">{fileName ? "File Uploaded: " : ""}</span>
+                            <span className="fileName">{fileName !== "" ? "File Uploaded: " : ""}</span>
                             <span className="fileName" aria-label="fileName">{fileName}</span>
                         </IonCol>
                     </IonRow>
                     <IonRow className="ion-justify-content-center">
                         <IonCol className="ion-padding" size="4">
-                            <span className="fileName">Image Preview:</span>
+                            {url !== "" ? <span className="fileName">Image Preview:</span> : <div></div>}
                         </IonCol>
                     </IonRow>
                     <IonRow className="ion-justify-content-center">
-                        <IonCol size="2">
-                            {url ? <img src={url} aria-label="imagePreview" alt="Image Preview" /> : <div></div>}
-
+                        <IonCol size="2" aria-label="imageWrapper">
+                            <img src={url !== "" ? url : ""} aria-label="imagePreview" />
                         </IonCol>
                     </IonRow>
 
